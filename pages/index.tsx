@@ -1,4 +1,4 @@
-import { Button, Htag, P, Rating } from '@/components';
+import { Button, Htag, P, Rating, Tag } from '@/components';
 import { useState } from 'react';
 
 export default function Home(): JSX.Element {
@@ -24,6 +24,10 @@ export default function Home(): JSX.Element {
         Маленький
       </P>
       <Rating rating={rating} setRating={setRating} isEditable/>
+      <Tag size='s'>Маленький</Tag>
+      <Tag size='m' color='red'>Маленький</Tag>
+      <Tag size='s' color='green'>Маленький</Tag>
+      <Tag size='s' color='primary'>Маленький</Tag>
     </div>
   );
 }
