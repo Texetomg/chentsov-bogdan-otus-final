@@ -11,13 +11,13 @@
 .active .sortIcon {
   display: block;
 
-  margin-right: 40px;
+  margin-right: 8px;
 }
 
 .sort {
   display: inline-block;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto;
   gap: 40px;
 }
 
@@ -27,4 +27,10 @@
 
   align-items: center;
   gap: 8px;
+
+  cursor: pointer;
+}
+
+.sort span:not(.active) {
+  grid-template-columns: 1fr;
 }
