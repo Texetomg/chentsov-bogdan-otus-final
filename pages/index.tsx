@@ -1,4 +1,4 @@
-import { Button, Htag, P, Rating, Tag } from '@/components';
+import { Button, Htag, Input, P, Rating, Tag, TextArea } from '@/components';
 import { withLayout } from '@/layout/Layout';
 import { GetStaticProps } from 'next';
 import { useState } from 'react';
@@ -32,9 +32,8 @@ function Home({ menu, firstCategory }: HomeProps): JSX.Element {
       <Tag size='m' color='red'>Маленький</Tag>
       <Tag size='s' color='green'>Маленький</Tag>
       <Tag size='s' color='primary'>Маленький</Tag>
-      <ul>
-        {menu.map(menuEl => <li key={menuEl._id.secondCategory}>{menuEl._id.secondCategory}</li>)}
-      </ul>
+      <Input placeholder='test'/>
+      <TextArea placeholder='test'/>
     </>
   );
 }
