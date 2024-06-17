@@ -62,7 +62,21 @@ export const Product = ({ product, className, ...props}: ProductProps): JSX.Elem
       {product.description}
     </div>
     <div className={styles.feature}>
-      фичи
+      {product.characteristics.map(c => (
+        <div 
+          className={styles.characterictics}
+          key={c.name}
+        >
+          <span className={styles.charactericticsName}>
+            {c.name}
+          </span>
+          <span className={styles.charactericticsDots}>
+          </span>
+          <span className={styles.charactericticsValue}>
+            {c.value}
+          </span>
+        </div>
+      ))}
     </div>
     <div className={styles.advBlock}>
       {product.advantages && (
