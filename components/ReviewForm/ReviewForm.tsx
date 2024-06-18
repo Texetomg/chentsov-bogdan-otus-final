@@ -11,12 +11,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { IReviewForm } from './ReviewForm.interface';
 
 export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps): JSX.Element => {
-  const { register, control, handleSubmit,} = useForm<IReviewForm>();
+  const { register, control, handleSubmit, formState} = useForm<IReviewForm>();
 
   const onSubmit = (data: IReviewForm) => {
     console.log(data);
   };
-
+console.log(formState);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div 
@@ -25,12 +25,14 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
       >
         <Input 
           placeholder='Имя'
-          {...register('name')}
+          {...register('name', { required: { value: true, message: 'Заполните имя'}})}
+          error={formState.errors.name}
         />
         <Input 
           placeholder='Заголовок отзыва'
           className={styles.title}
-          {...register('title')}
+          {...register('title', { required: { value: true, message: 'Заполните заголовок'}})}
+          error={formState.errors.title}
         />
         <div className={styles.rating}>
           <span>Оценка:</span>
@@ -50,7 +52,8 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
         <TextArea 
           placeholder='Текст отзыва'
           className={styles.description}
-          {...register('description')}
+          {...register('description', { required: { value: true, message: 'Заполните отзыв'}})}
+          error={formState.errors.description}
         />
         <div className={styles.submit}>
           <Button appearance='primary'>Отправить</Button>
