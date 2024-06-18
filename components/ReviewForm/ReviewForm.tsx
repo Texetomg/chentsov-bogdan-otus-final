@@ -7,27 +7,50 @@ import { Input } from '../Input/Input';
 import { TextArea } from '../TextArea/TextArea';
 import { Button } from '../Button/Button';
 import CloseIcon from './close.svg';
+import { useForm, Controller } from 'react-hook-form';
+import { IReviewForm } from './ReviewForm.interface';
 
 export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps): JSX.Element => {
+  const { register, control, handleSubmit,} = useForm<IReviewForm>();
+
+  const onSubmit = (data: IReviewForm) => {
+    console.log(data);
+  };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div 
         className={cn(styles.reviewForm, className)}
         {...props}
       >
-        <Input placeholder='Имя'/>
+        <Input 
+          placeholder='Имя'
+          {...register('name')}
+        />
         <Input 
           placeholder='Заголовок отзыва'
           className={styles.title}
+          {...register('title')}
         />
         <div className={styles.rating}>
           <span>Оценка:</span>
-          <Rating rating={0}/>
+          <Controller 
+            control={control}
+            name='rating'
+            render={({ field }) => (
+              <Rating
+                isEditable
+                rating={field.value}
+                setRating={field.onChange}
+                ref={field.ref}
+              />
+            )}
+          />
         </div>
         <TextArea 
           placeholder='Текст отзыва'
           className={styles.description}
+          {...register('description')}
         />
         <div className={styles.submit}>
           <Button appearance='primary'>Отправить</Button>
@@ -43,7 +66,7 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
         </div>
         <CloseIcon className={styles.close} />
       </div>
-    </>
+    </form>
   );
 };
 
