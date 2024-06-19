@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ProductProps } from './Product.props';
 import cn from 'classnames';
 import styles from './Product.module.css';
@@ -14,9 +14,17 @@ import { ReviewForm } from '../ReviewForm/ReviewForm';
 
 export const Product = ({ product, className, ...props}: ProductProps): JSX.Element => {
   const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
+  const reviewRef = useRef<HTMLDivElement>(null);
+  const scrollToReview = () => {
+    setIsReviewOpened(true);
+    reviewRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
   return (
-    <>
+    <div className={className} {...props}>
       <Card className={styles.product}>
         <div className={styles.logo}>
           <Image 
@@ -64,7 +72,12 @@ export const Product = ({ product, className, ...props}: ProductProps): JSX.Elem
           кредит
         </div>
         <div className={styles.rateTitle}>
-          {product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", 'отзыва', 'отзывов'])}
+          <a 
+            href='#ref'
+            onClick={scrollToReview}
+          >
+            {product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", 'отзыва', 'отзывов'])}
+          </a>
         </div>
         <Divider className={styles.hr}/>
         <div className={styles.description}>
@@ -120,10 +133,14 @@ export const Product = ({ product, className, ...props}: ProductProps): JSX.Elem
           </Button>
         </div>
       </Card>
-      <Card color='blue' className={cn(styles.reviews, {
-        [styles.opened]: isReviewOpened,
-        [styles.closed]: !isReviewOpened,
-      })}>
+      <Card 
+        color='blue'
+        className={cn(styles.reviews, {
+          [styles.opened]: isReviewOpened,
+          [styles.closed]: !isReviewOpened,
+        })}
+        ref={reviewRef}
+      >
         {product.reviews.map(r => (
           <div key={r._id}>
             <Review key={r._id} review={r}/>
@@ -132,6 +149,6 @@ export const Product = ({ product, className, ...props}: ProductProps): JSX.Elem
         ))}
         <ReviewForm productId={product._id}/>
       </Card>
-    </>
+    </div>
   );
 };
