@@ -75,10 +75,16 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
             </Tag>
           ))}
         </div>
-        <div className={styles.priceTitle}>
+        <div
+          className={styles.priceTitle}
+          aria-hidden={true}
+        >
           цена
         </div>
-        <div className={styles.creditTitle}>
+        <div
+          className={styles.creditTitle}
+          aria-hidden={true}
+        >
           кредит
         </div>
         <div className={styles.rateTitle}>

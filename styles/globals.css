@@ -35,3 +35,12 @@ a {
 	--gray: #A4a4a4;
 	--red-light: #fea291;
 }
+
+.visualyHidden {
+	position: absolute;
+
+	overflow: hidden;
+
+	width: 0;
+	height: 0;
+}
