@@ -12,7 +12,7 @@ import { IReviewForm, IReviewSentResponse } from './ReviewForm.interface';
 import { API } from '@/helpers/api';
 import axios from 'axios';
 
-export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps): JSX.Element => {
+export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewFormProps): JSX.Element => {
   const { register, control, handleSubmit, formState, reset } = useForm<IReviewForm>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string>();
@@ -41,12 +41,14 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
           placeholder='Имя'
           {...register('name', { required: { value: true, message: 'Заполните имя'}})}
           error={formState.errors.name}
+          tabIndex={isOpened ? 0 : -1}
         />
         <Input 
           placeholder='Заголовок отзыва'
           className={styles.title}
           {...register('title', { required: { value: true, message: 'Заполните заголовок'}})}
           error={formState.errors.title}
+          tabIndex={isOpened ? 0 : -1}
         />
         <div className={styles.rating}>
           <span>Оценка:</span>
@@ -61,6 +63,7 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
                 rating={field.value}
                 setRating={field.onChange}
                 ref={field.ref}
+                tabIndex={isOpened ? 0 : -1}
               />
             )}
           />
@@ -70,9 +73,15 @@ export const ReviewForm = ({ productId,  className, ...props}: ReviewFormProps):
           className={styles.description}
           {...register('description', { required: { value: true, message: 'Заполните отзыв'}})}
           error={formState.errors.description}
+          tabIndex={isOpened ? 0 : -1}
         />
         <div className={styles.submit}>
-          <Button appearance='primary'>Отправить</Button>
+          <Button
+            appearance='primary'
+            tabIndex={isOpened ? 0 : -1}
+          >
+            Отправить
+          </Button>
           <span className={styles.info}>
             * Перед публикацией отзыв пройдет предварительную модерацию и проверку
           </span>

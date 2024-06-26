@@ -25,6 +25,8 @@
 
 .body {
   grid-area: body;
+
+  outline: none;
 }
 
 @media (width <= 765px) {
@@ -44,4 +46,22 @@
   .body {
     padding: 0 15px;
   }
+}
+
+.skipLink {
+  position: fixed;
+  top: 0;
+  left: 100px;
+
+  display: block;
+  overflow: hidden;
+
+  height: 0;
+
+  color: var(--white);
+  background: var(--primary);
+}
+
+.displayed {
+  height: auto;
 }
