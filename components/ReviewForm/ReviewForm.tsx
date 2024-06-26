@@ -13,7 +13,7 @@ import { API } from '@/helpers/api';
 import axios from 'axios';
 
 export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewFormProps): JSX.Element => {
-  const { register, control, handleSubmit, formState, reset } = useForm<IReviewForm>();
+  const { register, control, handleSubmit, formState, reset, clearErrors } = useForm<IReviewForm>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
@@ -42,6 +42,7 @@ export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewF
           {...register('name', { required: { value: true, message: 'Заполните имя'}})}
           error={formState.errors.name}
           tabIndex={isOpened ? 0 : -1}
+          aria-invalid={formState.errors.name ? true : false}
         />
         <Input 
           placeholder='Заголовок отзыва'
@@ -49,6 +50,7 @@ export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewF
           {...register('title', { required: { value: true, message: 'Заполните заголовок'}})}
           error={formState.errors.title}
           tabIndex={isOpened ? 0 : -1}
+          aria-invalid={formState.errors.title ? true : false}
         />
         <div className={styles.rating}>
           <span>Оценка:</span>
@@ -74,11 +76,14 @@ export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewF
           {...register('description', { required: { value: true, message: 'Заполните отзыв'}})}
           error={formState.errors.description}
           tabIndex={isOpened ? 0 : -1}
+          aria-label='Текст отзыва'
+          aria-invalid={formState.errors.description ? true : false}
         />
         <div className={styles.submit}>
           <Button
             appearance='primary'
             tabIndex={isOpened ? 0 : -1}
+            onClick={() => clearErrors()}
           >
             Отправить
           </Button>
@@ -88,24 +93,33 @@ export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewF
         </div>
       </div>
       {isSuccess && (
-        <div className={cn(styles.panel, styles.success)}>
+        <div
+          className={cn(styles.panel, styles.success)}
+          role='alert'
+        >
           <div className={styles.successTitle}>Ваш отзыва отправлен</div>
           <div className={styles.description}>
             Спасибо, ваш отзыв будет опубликован
           </div>
-          <CloseIcon 
-            className={styles.close}
+          <button
             onClick={() => setIsSuccess(false)}
-          />
+            className={styles.close}
+            aria-label='Закрыть оповещение'
+          >
+            <CloseIcon />
+          </button>
         </div>
       )}
       {error && (
         <div className={cn(styles.panel, styles.error)}>
           {error}
-          <CloseIcon
-            className={styles.close} 
+          <button
             onClick={() => setError(undefined)}
-          />
+            className={styles.close} 
+            aria-label='Закрыть оповещение'
+          >
+            <CloseIcon/>
+          </button>
         </div>
       )}
     </form>
