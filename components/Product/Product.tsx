@@ -37,7 +37,7 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
     >
       <Card className={styles.product}>
         <div className={styles.logo}>
-          <Image 
+          <img 
             src={`${process.env.NEXT_PUBLIC_DOMAIN}${product.image}`}
             alt={product.title}
             width={70}

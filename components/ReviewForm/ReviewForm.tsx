@@ -26,7 +26,8 @@ export const ReviewForm = ({ productId,  className, isOpened, ...props}: ReviewF
       } else {
         setError('Что-то пошло не так');
       }
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       setError(e.message);
     }    
   };

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { MenuItem } from '@/interfaces/menu.interface';
 import { API } from '@/helpers/api';
 
-function Home({ menu, firstCategory }: HomeProps): JSX.Element {
+function Home(): JSX.Element {
   const [rating, setRating] = useState<number>(5);
   return (
     <>
@@ -51,8 +51,3 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   };
 };
-
-interface HomeProps extends Record<string, unknown>{
-  menu: MenuItem[],
-  firstCategory: number,
-}

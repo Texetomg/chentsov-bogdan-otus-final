@@ -10,6 +10,7 @@ export const Rating = forwardRef(({ isEditable = false, rating, setRating, tabIn
 
   useEffect(() => {
     constructRating(rating);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rating, tabIndex]);
 
   const changeDisplay = (i: number) => {

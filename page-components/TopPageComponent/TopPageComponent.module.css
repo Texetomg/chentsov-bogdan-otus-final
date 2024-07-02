@@ -9,8 +9,6 @@
   margin-bottom: 30px;
 }
 
-.wrapper {}
-
 .hhTitle {
   display: grid;
   grid-template-columns: auto 1fr;
