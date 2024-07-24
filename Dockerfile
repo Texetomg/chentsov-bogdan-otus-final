@@ -1,7 +1,7 @@
-FROM node:14-alphine
+FROM node:16.14-alpine
 WORKDIR /opt/app
 ADD package.json package.json
-RUN npm install
+RUN npm install --legacy-peer-deps
 ADD . .
 ENV NODE_ENV production
 RUN npm run build
