@@ -37,7 +37,7 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
       <Card className={styles.product}>
         <div className={styles.logo}>
           <img 
-            src={`${process.env.NEXT_PUBLIC_DOMAIN}${product.image}`}
+            src={`${product.image}`}
             alt={product.title}
             width={70}
             height={70}
@@ -154,23 +154,25 @@ export const Product = motion(forwardRef(({ product, className, ...props}: Produ
         variants={variants}
         initial='hidden'
       >
-        <Card 
-          color='blue'
-          className={cn(styles.reviews)}
-          ref={reviewRef}
-          tabIndex={isReviewOpened ? 0 : -1}
-        >
-          {product.reviews.map(r => (
-            <div key={r._id}>
-              <Review key={r._id} review={r}/>
-              <Divider />
-            </div>
-          ))}
-          <ReviewForm
-            productId={product._id}
-            isOpened={isReviewOpened}
-          />
-        </Card>
+        {isReviewOpened && (
+          <Card
+            color='blue'
+            className={cn(styles.reviews)}
+            ref={reviewRef}
+            tabIndex={isReviewOpened ? 0 : -1}
+          >
+            {product.reviews.map(r => (
+              <div key={r._id}>
+                <Review key={r._id} review={r} />
+                <Divider />
+              </div>
+            ))}
+            <ReviewForm
+              productId={product._id}
+              isOpened={isReviewOpened}
+            />
+          </Card>
+        )}
       </motion.div>
     </div>
   );

@@ -12,7 +12,6 @@ import { motion, useReducedMotion } from 'framer-motion';
 export const Menu = (): JSX.Element => {
   const shouldReduceMotion = useReducedMotion();
   const { menu, setMenu, firstCategory } = useContext(AppContext);
-  const [announce, setAnnounce] = useState<'closed' | 'opened' | undefined>();
   const router = useRouter();
   const variants = {
     visible: {
@@ -30,7 +29,7 @@ export const Menu = (): JSX.Element => {
   const variantsChildren = {
     visible: {
       opacity: 1,
-      height: 29,
+      height: 'auto',
     },
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
@@ -41,7 +40,6 @@ export const Menu = (): JSX.Element => {
   const openSecondLevel = (secondCategory: string) => {
     setMenu && setMenu(menu.map(m => {
       if (m._id.secondCategory === secondCategory) {
-        setAnnounce(m.isOpened ? 'closed' : 'opened');
         m.isOpened = !m.isOpened;
       }
       return m;
@@ -96,7 +94,7 @@ export const Menu = (): JSX.Element => {
               >
                 {m._id.secondCategory}
               </button>
-              <motion.ul 
+              <motion.div 
                 className={cn(styles.secondLevelBlock)}
                 layout
                 variants={variants}
@@ -104,7 +102,7 @@ export const Menu = (): JSX.Element => {
                 animate={m.isOpened ? 'visible' : 'hidden'}
               >
                 {buildThirdLevel(m.pages, menuItem.route, m.isOpened ?? false)}
-              </motion.ul>
+              </motion.div>
             </li>
           );
         })}
@@ -115,7 +113,7 @@ export const Menu = (): JSX.Element => {
   const buildThirdLevel = (pages: PageItem[], route: string, isOpened: boolean) => {
     return (
       pages.map(p => (
-        <motion.li
+        <motion.div
           key={p.alias}
           variants={variantsChildren}
         >
@@ -129,7 +127,7 @@ export const Menu = (): JSX.Element => {
           >
             {p.category}
           </Link>
-        </motion.li>
+        </motion.div>
       ))
     );
   };
@@ -140,14 +138,6 @@ export const Menu = (): JSX.Element => {
       role='navigaiton'
     >
       <ul>
-        {announce && (
-          <span
-            className='visualyHidden'
-            role='log'
-          >
-            {announce === 'opened' ? 'развернуто' : 'свернуто'}
-          </span>
-        )}
         {buildFirstLevel()}
       </ul>
     </nav>
